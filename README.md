@@ -75,11 +75,11 @@ cloud=lots of storage + compute cycles (计算周期)nearby
 
 #### MapReduce fault-tolerance
 * server failure
- * NM heartbeats to RM
- * NM keeps track of each task running at its server
- * AM heartbeats to RM
+   * NM heartbeats to RM
+   * NM keeps track of each task running at its server
+   * AM heartbeats to RM
 * RM failure
- * piggyback
+   * piggyback
 
 * Stragglers: speculative execution, 两个task同时运行，第一个完成了就标记为已完成
 * Locality： 3 replicas
