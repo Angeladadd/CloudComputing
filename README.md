@@ -84,4 +84,53 @@ cloud=lots of storage + compute cycles (计算周期)nearby
 * Stragglers: speculative execution, 两个task同时运行，第一个完成了就标记为已完成
 * Locality： 3 replicas
 
+# Gossip(epidemic) protocol
+
+### multicast
+#### multicast vs broadcast
+* broadcast: 消息送到整个网络上的所有节点
+* multicast: 只送到一个特定的group
+
+#### 要求
+* 容错： ACK NAK机制
+* 扩展性：树形
+
+### gossip
+
+* push gossip: sender周期性的随机选择b个target发送gossip message，用UDP传输，有了gossip message的结点周期性的选择b个target发送gossip message.....target可以重复被选，每一个节点有独立的时钟;对于多个gossip messages可以随机选择它的一个子集，或最近收到的，或最高优先级的
+* pull gossip: send queries rather than messages, 被问的节点如果有这个message会返回一个copy
+
+#### push gossip
+* light weight
+* fast
+* highly fault tolerant
+
+##### epidemiology
+分析监狱、社会中传染病的传播
+
+* n+1个混合的个体
+* 每一对个体的接触概率$\beta$
+* 每个时刻有y个感染者和x个未感染者
+* initially x=n y=1 anytime x+y=n+1
+* 感染者与未感染者接触则未感染者被感染
+
+##### fault tolerance
+* packet loss
+    * 50%loss b to b/2 多跑两轮而已
+* node failure
+    * 50% nodes fail n to n/2 b to b/2
+* 传言会很快消失吗？不会
+
+#### pull gossip
+
+* n/2的节点得到gossip: O(log N) in the best case
+* 之后 pull 会比 push 更快，O(log log N)
+
+#### hybird gossip
+* push in the first round to get half nodes infected
+* pull in the later rount to fasten the process of being infected
+
+#### topology aware gossip
+
+提高传递给同一个subnet的概率，若$subnet_i$有$n_i$个节点，那么这个subnet中的节点选择subnet外节点的概率设为$1/n_i$,这样跨subnet传输的复杂度将变为O(1)
 
