@@ -23,7 +23,7 @@ cloud=lots of storage + compute cycles (计算周期)nearby
 
 ### 分布式系统
 
-### MapReduce
+# MapReduce
 
 * 从函数式编程而来
 * map: process each record sequentially and independently
@@ -32,31 +32,31 @@ cloud=lots of storage + compute cycles (计算周期)nearby
 * map: parallelly, process individual record, key value pairs
 * reduce: merge, parrallelly processes and merges by partitioning keys
 
-#### examples
+### examples
 
-##### distributed grep
+#### distributed grep
 * map: emit line
 * reduce: output
 
-##### reverse web-link graph
+#### reverse web-link graph
  * map : \<source, target\> to \<target, source\>
  * reduce : \<target, list\>
 
-##### count of url access frequency
+#### count of url access frequency
 * map: \<url, 1\>
 * reduce: \< url, count\>
 * map: \<1, (url, count)\> 为什么 key 是 1: 因为要把所有的加起来，Batch应该是全部的。
 * reduce: sum up
 
-##### sort
+#### sort
 * map: \<key,value\> to \<value, whatever\>
 * reduce: 
 * partition function: 一个范围的values
 * map的输出会用快排排序，reduce的输出会用merge sort排序
 
-#### MapReduce scheduling
+### MapReduce scheduling
 
-##### programming
+#### programming
 * user
     * write map & reduce program
     * submit and wait
@@ -67,13 +67,13 @@ cloud=lots of storage + compute cycles (计算周期)nearby
     * storage of input and output: map input : distributed file systems, map output : local file system, reduce read remote disk write to distributed file system
     * barrier between map and reduce
 
-#####  Yarn scheduler
+####  Yarn scheduler
 * resource manager: scheduling
 * server as node:
     * node manager: server specific function & daemon( report container completed?
     * application master: container negotiation with RM and NMs, detecting task failures( ask for container
 
-#### MapReduce fault-tolerance
+### MapReduce fault-tolerance
 * server failure
    * NM heartbeats to RM
    * NM keeps track of each task running at its server
