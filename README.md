@@ -134,3 +134,80 @@ cloud=lots of storage + compute cycles (计算周期)nearby
 
 提高传递给同一个subnet的概率，若$subnet_i$有$n_i$个节点，那么这个subnet中的节点选择subnet外节点的概率设为$1/n_i$,这样跨subnet传输的复杂度将变为O(1)
 
+
+# Group Membership
+
+Mean Time To Failure MTTF=一台机器多久会failure/机器数
+
+## membership
+* failure detector: detect failures
+* dissemination: 传播消息：failures, process join and leave
+
+## failure detectors
+* completeness = 每一个failure都被检测到
+* accuracy = 没有错误的检测
+* speed
+* scale
+
+### heartbeating
+包含序列号的周期性的消息
+* centralized heartbeating
+* ring heartbeating
+* all to all heartbeating
+
+## gossip-style membership
+* 节点周期性的gossip他们的memberlist
+* on receipt, the local membership list is update: 序列号增加了，就更新，时间设为当前时间(local)
+
+## best failure detector
+* completeness: guarantee always
+* accuracy: PM(T) T时间内错误检测的概率
+* speed: T
+* scale:
+
+## Probabilistic Failure Detector: SWIM
+* ping
+
+一个进程pi周期性的随机ping另一个进程pj，被ping的进程发ACK，如果ping的进程没有收到ACK，它会间接的ping k个其他进程，其他进程ping pj，ping通发一个indirected ACK给pi，如果pi没有收到direct & indirect ACK，标记pj fail
+
+## dissemination
+
+### multicast: hardware/ip
+
+* unreliable
+* 多个process近乎同时检测出同一个failure
+
+### point2point: tcp/udp
+* expensive
+
+### zero extra message: piggyback on failure detector messages
+* infectious
+* like SWIM
+
+### suspicion mechanism
+
+* incarnation number： 只能被Pj增加，如果有其他进程检测到Pj的incarnation number比pre-process incarnation number大，那么Pj就还活着
+
+# Grid
+
+如何调度DAG
+
+## Grid infrastructure
+* globus: which job on which site
+* intrasite protocol: schedule differet tasks on that job
+
+### condor(htcondor)
+* workstation free -> ask site’s central server (or globus) for tasks
+* 如果用户有输入，stop task( kill task or ask server to reschedule task)
+
+### inter-site protocol
+* 不管intra site protocols
+* 外部的调度，和intra schedules通信，其实自己并不调度？
+* data transfer
+
+### security
+* single sign on
+* mapping to local security mechanisms
+* delegation
+* community authorization
+
